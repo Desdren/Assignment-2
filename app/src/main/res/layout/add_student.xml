@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameInput"
+        android:inputType="text"
+        android:hint="Enter Name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/programmeInput"
+        android:hint="Enter Program"
+        android:layout_below="@id/nameInput"
+        android:inputType="text" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/emailInput"
+        android:hint="Enter E-Mail"
+        android:layout_below="@id/programmeInput"
+        android:inputType="textEmailAddress" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/aligner"
+        android:layout_below="@id/emailInput">
+
+        <EditText
+            android:id="@+id/stuCodeInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Student Code"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/semInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Semester"
+            android:layout_marginStart="16dp"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Student"
+            android:id="@+id/addStudBtn"
+            android:layout_below="@id/aligner"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

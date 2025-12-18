@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Base application theme -->
+    <style name="Base.Theme.Assignment2Dec14" parent="Theme.Material3.DayNight">
+        <!-- keep Material3 customizations here -->
+    </style>
+
+    <!-- App theme with ActionBar -->
+    <style name="Theme.Assignment2Dec14" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- you can customize colors, fonts, etc. here -->
+    </style>
+
+</resources>
