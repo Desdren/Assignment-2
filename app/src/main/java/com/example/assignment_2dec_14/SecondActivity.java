@@ -17,13 +17,23 @@ import java.util.ArrayList;
 
 public class SecondActivity extends AppCompatActivity {
 
+    DatabaseHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_second);
 
-        ArrayList<Events> events = new ArrayList<>();
+        //intent data get
+        Intent i = getIntent();
+        int scode = i.getIntExtra("scode", -1);
+
+        dbHelper = new DatabaseHelper(this);
+        Student student = null;
+        if (scode != -1) {
+            student = dbHelper.getStudentByCode(scode);
+        }
 
         //Action Bar
         ActionBar myActionBar = getSupportActionBar();
@@ -32,21 +42,17 @@ public class SecondActivity extends AppCompatActivity {
             myActionBar.show();
         }
 
-        //intent data get
-        Intent i = getIntent();
-        String name = i.getStringExtra("name");
-        String programme = i.getStringExtra("programme");
-        String semester = i.getStringExtra("semester");
-
         TextView nameBar = findViewById(R.id.nameData);
         TextView progBar = findViewById(R.id.programmeData);
         TextView semBar = findViewById(R.id.semData);
 
-        //placing data in textviews
-        nameBar.append(" " + name);
-        progBar.append(" "+programme);
-        semBar.append(" "+semester);
+        if (student != null) {
+            nameBar.append(student.getSname());
+            progBar.setText("Programme: " + student.getScourse());
+            semBar.setText("Semester: " + student.getSsem());
+        }
 
+        //fragments
         FragmentManager myManager = getSupportFragmentManager();
         FragmentTransaction transaction = myManager.beginTransaction();
 

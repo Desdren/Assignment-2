@@ -2,6 +2,7 @@ package com.example.assignment_2dec_14;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.sqlite.*;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     String name, programme, semester;
 
+    DatabaseHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //to be done later
+                Intent intent = new Intent(MainActivity.this, ViewStudent.class);
+                startActivity(intent);
             }
         });
 
@@ -44,13 +48,12 @@ public class MainActivity extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //initializing dialog
                 final Dialog dialog = new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.add_student);
                 dialog.setTitle("Add Student Here");
                 dialog.show();
 
-                //declaring used widgets in dialog
+                // Widgets
                 EditText nameGet = dialog.findViewById(R.id.nameInput);
                 EditText programmeGet = dialog.findViewById(R.id.programmeInput);
                 EditText emailGet = dialog.findViewById(R.id.emailInput);
@@ -58,13 +61,27 @@ public class MainActivity extends AppCompatActivity {
                 EditText semGet = dialog.findViewById(R.id.semInput);
                 Button addStudent = dialog.findViewById(R.id.addStudBtn);
 
-                //setting up action for button
+                try {
+                    dbHelper = new DatabaseHelper(MainActivity.this);
+                } catch (SQLiteException e) {
+                    Toast.makeText(MainActivity.this, "DATABASE ERROR :(", Toast.LENGTH_SHORT).show();
+                }
+
                 addStudent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        name = nameGet.getText().toString();
-                        programme = programmeGet.getText().toString();
-                        semester = semGet.getText().toString();
+                        String name = nameGet.getText().toString().trim();
+                        String programme = programmeGet.getText().toString().trim();
+                        String email = emailGet.getText().toString().trim();
+                        Integer codeStr = Integer.valueOf(studCodeGet.getText().toString().trim());
+                        Integer semStr = Integer.valueOf(semGet.getText().toString().trim());
+
+                        if (name.isEmpty() || programme.isEmpty() || email.isEmpty() || codeStr==0 || semStr==0) {
+                            Toast.makeText(MainActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        dbHelper.addStudent(name, programme, email, codeStr, semStr);
 
                         Toast.makeText(MainActivity.this, "Added Student Successfully!", Toast.LENGTH_SHORT).show();
 
